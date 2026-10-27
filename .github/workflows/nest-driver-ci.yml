@@ -1,0 +1,39 @@
+name: Nest driver checks
+
+on:
+  push:
+    paths:
+      - 'drivers/Personal/nest-matter-thermostat/**'
+      - 'tools/run_nest_tests.py'
+      - '.github/workflows/nest-driver-ci.yml'
+  pull_request:
+    paths:
+      - 'drivers/Personal/nest-matter-thermostat/**'
+      - 'tools/run_nest_tests.py'
+      - '.github/workflows/nest-driver-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install Lua 5.3 and luacheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.3 lua-check
+      - name: Download tested SmartThings SDK
+        run: |
+          mkdir -p .cache lua_libs
+          curl --fail --location --retry 3 \
+            https://github.com/SmartThingsCommunity/SmartThingsEdgeDrivers/releases/download/apiv21_62/lua_libs-api_v21_62X.tar.gz \
+            --output .cache/sdk.tar.gz
+          echo '6956bb74f8a2e08f6fc513d9239717885f0f9fb03beee8339be8e5b1bcaa2b0d  .cache/sdk.tar.gz' | sha256sum --check
+          tar -xzf .cache/sdk.tar.gz -C lua_libs --strip-components=1
+      - name: Run integration tests
+        run: python3 tools/run_nest_tests.py
+      - name: Lint Lua
+        run: luacheck --config .github/workflows/.luacheckrc drivers/Personal/nest-matter-thermostat/src

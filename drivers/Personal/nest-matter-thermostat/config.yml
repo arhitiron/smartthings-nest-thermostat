@@ -1,0 +1,6 @@
+name: 'Nest Matter Thermostat Calculated'
+packageKey: 'nest-matter-thermostat-calculated'
+permissions:
+  matter: {}
+description: "Nest thermostat with calculated heating and idle state for routines"
+vendorSupportInformation: "https://support.smartthings.com"

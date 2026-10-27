@@ -1,3 +1,36 @@
+# Nest Thermostat calculated operating state
+
+This is a GitHub-linked fork of [SmartThings Edge Drivers](https://github.com/SmartThingsCommunity/SmartThingsEdgeDrivers).
+Our custom Nest Thermostat (2020) driver publishes calculated **heating / idle**
+for local SmartThings routines controlling a separate relay. It runs on the hub
+and does not directly command the relay. **Cooling is planned, not implemented.**
+
+- [Driver setup, use, tests, and rollback](drivers/Personal/nest-matter-thermostat/README.md)
+- [Future cooling and Auto roadmap](drivers/Personal/nest-matter-thermostat/docs/COOLING_ROADMAP.md)
+- [Upstream provenance](drivers/Personal/nest-matter-thermostat/UPSTREAM.md)
+- [Original standalone repository and history](https://github.com/arhitiron/smartthings-nest-thermostat-standalone)
+
+The official drivers remain intact under `drivers/SmartThings/`; our changes are
+isolated under `drivers/Personal/nest-matter-thermostat/` with a separate package key.
+
+## Syncing upstream
+
+From a clone of this fork, add upstream once, then merge updates:
+
+```sh
+git remote add upstream https://github.com/SmartThingsCommunity/SmartThingsEdgeDrivers.git
+git fetch upstream
+git switch main
+git merge upstream/main
+```
+
+Review and test changes before pushing or deploying. A local `upstream` remote
+is configured in the migration checkout. Re-run the Nest tests and review
+upstream Matter Thermostat changes for relevant fixes; updates in the official
+driver directory do not automatically modify our separate copied driver.
+
+---
+
 # SmartThingsEdgeDrivers
 
 ## What is SmartThings Edge?

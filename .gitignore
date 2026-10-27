@@ -10,3 +10,9 @@ tools/coverage_output_html/
 tools/__pycache__/
 .DS_Store
 .venv/
+
+# Local Nest driver development artifacts
+/lua_libs/
+/.cache/
+/.local/
+/drivers/Personal/nest-matter-thermostat/artifacts/
